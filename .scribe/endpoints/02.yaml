@@ -1,0 +1,251 @@
+name: Purchases
+description: |-
+
+  APIs for handling product purchases via Floosak and Jaib wallets.
+
+  NOTE for Developers:
+  --------------------
+  The 'items' array in purchase requests is fully flexible.
+  You can pass any array of objects with 'id', 'name', 'quantity', and 'price' as json array[{"id":1,"name":"Samsung Galaxy S24","quantity":1,"price":5000},{"id":2,"name":"Apple iPhone 15","quantity":1,"price":7000}].
+  There is no real products table — this is purely for simulation/testing.
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/purchase
+    metadata:
+      custom: []
+      groupName: Purchases
+      groupDescription: |-
+
+        APIs for handling product purchases via Floosak and Jaib wallets.
+
+        NOTE for Developers:
+        --------------------
+        The 'items' array in purchase requests is fully flexible.
+        You can pass any array of objects with 'id', 'name', 'quantity', and 'price' as json array[{"id":1,"name":"Samsung Galaxy S24","quantity":1,"price":5000},{"id":2,"name":"Apple iPhone 15","quantity":1,"price":7000}].
+        There is no real products table — this is purely for simulation/testing.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create Purchase'
+      description: 'Initialize a purchase using selected wallet.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      wallet:
+        custom: []
+        name: wallet
+        description: 'Wallet name. Must be floosak or jaib.'
+        required: true
+        example: jaib
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      amount:
+        custom: []
+        name: amount
+        description: 'Purchase amount (less than 30000).'
+        required: true
+        example: 100.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      items:
+        custom: []
+        name: items
+        description: 'List of items (any format).'
+        required: true
+        example:
+          -
+            id: 1
+            name: 'Product 1'
+            quantity: 2
+            price: 50
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      code:
+        custom: []
+        name: code
+        description: 'Required if wallet=jaib. Must be one of: 1112, 1113, 1114, 1115, 1116.'
+        required: false
+        example: '1112'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      wallet: jaib
+      amount: 100.0
+      items:
+        -
+          id: 1
+          name: 'Product 1'
+          quantity: 2
+          price: 50
+      code: '1112'
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "isSuccess": true,
+            "message": "Purchase completed successfully",
+            "data": { "reference": "20260303153000123", "items": [{"id":1,"name":"Product 1","quantity":2,"price":50}] }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 400
+        content: |-
+          {
+            "isSuccess": false,
+            "message": "Invalid wallet selected",
+            "data": null
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 422
+        content: |-
+          {
+            "isSuccess": false,
+            "message": "Invalid Jaib code. Allowed codes: 1112, 1113, 1114, 1115, 1116.",
+            "data": null
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/purchase/confirm-otp
+    metadata:
+      custom: []
+      groupName: Purchases
+      groupDescription: |-
+
+        APIs for handling product purchases via Floosak and Jaib wallets.
+
+        NOTE for Developers:
+        --------------------
+        The 'items' array in purchase requests is fully flexible.
+        You can pass any array of objects with 'id', 'name', 'quantity', and 'price' as json array[{"id":1,"name":"Samsung Galaxy S24","quantity":1,"price":5000},{"id":2,"name":"Apple iPhone 15","quantity":1,"price":7000}].
+        There is no real products table — this is purely for simulation/testing.
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Confirm OTP'
+      description: 'Confirm Floosak OTP to complete purchase.'
+      authenticated: true
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      wallet_reference_id:
+        custom: []
+        name: wallet_reference_id
+        description: 'Wallet reference ID you got it form previous purchase request.'
+        required: true
+        example: '20260303153000123'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      otp:
+        custom: []
+        name: otp
+        description: 'OTP code.'
+        required: true
+        example: '123456'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        deprecated: false
+      items:
+        custom: []
+        name: items
+        description: 'List of purchased items (same format as purchase request)'
+        required: true
+        example:
+          - consequatur
+        type: 'string[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      wallet_reference_id: '20260303153000123'
+      otp: '123456'
+      items:
+        - consequatur
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: |-
+          {
+            "isSuccess": true,
+            "message": "Purchase completed successfully",
+            "data": { "reference": "20260303153000123", "items": [{"id":1,"name":"Product 1","quantity":2,"price":50}] }
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 400
+        content: |-
+          {
+            "isSuccess": false,
+            "message": "OTP confirmation is only supported for Floosak",
+            "data": null
+          }
+        headers: []
+        description: ''
+      -
+        custom: []
+        status: 404
+        content: |-
+          {
+            "isSuccess": false,
+            "message": "Payment not found",
+            "data": null
+          }
+        headers: []
+        description: ''
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null

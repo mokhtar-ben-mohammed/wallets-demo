@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class tempPayment extends Model
+class TempPayment extends Model
 {
     //
     protected $fillable = [
